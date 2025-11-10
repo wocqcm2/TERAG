@@ -512,9 +512,6 @@ This project builds upon the [HippoRAG](https://arxiv.org/abs/2405.14831) framew
 
 ## Contact
 
-**Jiaxin Bai**  
-Email: jbai@connect.ust.hk
-
 **Qiao Xiao**  
 Email: qx226@cornell.edu
 
