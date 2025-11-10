@@ -1,0 +1,172 @@
+# TERAG Configuration File
+# This file contains all configuration parameters for the TERAG framework
+
+# ============================================================================
+# API Configuration
+# ============================================================================
+api:
+  # API provider: "deepinfra" or "openai"
+  provider: "deepinfra"
+  
+  # DeepInfra API settings
+  deepinfra:
+    api_key: "YOUR_DEEPINFRA_API_KEY"
+    base_url: "https://api.deepinfra.com/v1/openai"
+    timeout: 260
+    max_retries: 5
+    
+    # Model settings
+    # Extraction model: lightweight model for concept extraction (8B)
+    extraction_model: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
+    # Generation model: powerful model for answer generation (70B)
+    generation_model: "meta-llama/Llama-3.3-70B-Instruct"
+  
+  # OpenAI API settings
+  openai:
+    api_key: "YOUR_OPENAI_API_KEY"
+    base_url: "https://api.openai.com/v1"
+    timeout: 260
+    max_retries: 5
+    
+    # Model settings
+    extraction_model: "gpt-4o-mini"
+    generation_model: "gpt-4o"
+
+# ============================================================================
+# Concept Extraction Configuration
+# ============================================================================
+extraction:
+  # Text processing
+  text_chunk_size: 4096          # Maximum tokens per text chunk
+  chunk_overlap: 150              # Overlap between chunks (in tokens)
+  remove_doc_spaces: true         # Normalize whitespace in documents
+  
+  # Batch processing
+  batch_size: 320                 # Number of documents to process in parallel
+  optimized_batching: true        # Use optimized batch processing
+  optimized_batch_size: 5         # Documents per API call (for optimized mode)
+  max_workers: 16                 # Number of parallel workers
+  sleep_interval: 0.1             # Sleep between batches (seconds)
+  batch_rest_frequency: 50        # Rest after N batches
+  
+  # Model parameters
+  max_new_tokens: 1024            # Maximum tokens in model output
+  temperature: 0.1                # Sampling temperature
+  
+  # Concept filtering
+  normalize_concept_names: true   # Normalize concept names (lowercase, etc.)
+  filter_low_quality: true        # Filter out low-quality concepts
+  min_concept_frequency: 1        # Minimum frequency to keep a concept
+  
+  # Extraction mode
+  extraction_mode: "passage_entity_document_concept"
+  language: "en"
+  include_abstraction_levels: true
+  include_hierarchical_relations: true
+  
+  # Output settings
+  record_usage: true              # Record token usage statistics
+  save_intermediate_results: true # Save intermediate extraction results
+
+# ============================================================================
+# Graph Construction Configuration
+# ============================================================================
+graph:
+  # Node creation
+  create_passage_nodes: true      # Create nodes for text passages
+  create_concept_nodes: true      # Create nodes for concepts
+  
+  # Edge creation
+  create_has_passage_edges: true  # Create concept -> passage edges
+  create_cooccur_edges: true      # Create co-occurrence edges between concepts
+  
+  # Co-occurrence settings
+  max_concepts_per_passage: 500   # Maximum concepts per passage (for co-occur edges)
+  cooccur_bidirectional: true     # Create bidirectional co-occurrence edges
+  
+  # Clustering (disabled by default)
+  enable_clustering: false        # Enable concept clustering
+  clustering_method: "fast"       # Clustering method (if enabled)
+  
+  # Graph output
+  output_format: "graphml"        # Output format: "graphml"
+  include_node_attributes: true   # Include all node attributes in output
+  include_edge_attributes: true   # Include all edge attributes in output
+
+# ============================================================================
+# Retrieval Configuration (HippoRAG)
+# ============================================================================
+retrieval:
+  # Embedding model
+  embedding_model: "all-MiniLM-L6-v2"
+  normalize_embeddings: true
+  embedding_batch_size: 64
+  
+  # HippoRAG original version settings
+  hipporag_original:
+    topk_nodes: 10                # Number of top nodes for personalization
+    ppr_alpha: 0.85               # PageRank damping factor
+    ppr_max_iter: 2000            # Maximum PageRank iterations
+    ppr_tol: 1.0e-7               # PageRank convergence tolerance
+  
+  # HippoRAG enhanced version settings
+  hipporag_enhanced:
+    topk_nodes: 30                # Number of top nodes for personalization
+    ppr_alpha: 0.45                # PageRank damping factor (lower = more exploration)
+    ppr_max_iter: 3000            # Maximum PageRank iterations
+    ppr_tol: 1.0e-6               # PageRank convergence tolerance
+    freq_weight_factor: 0.5       # Frequency weight factor (0.0-1.0)
+  
+  # Retrieval settings   
+  topk_retrieval: 5               # Number of passages to retrieve
+  include_concept_nodes: true     # Include concept nodes in graph
+  include_event_nodes: true       # Include event nodes in graph
+
+# ============================================================================
+# Benchmark Configuration
+# ============================================================================
+benchmark:
+  # Dataset settings
+  # Note: Place your benchmark data files in the dataset/ directory
+  # or provide absolute paths to your data files
+  datasets:
+    hotpotqa: "dataset/hotpotqa.json"
+    2wikimultihopqa: "dataset/2wikimultihopqa.json"
+    musique: "dataset/musique.json"
+  
+  # Evaluation settings
+  num_samples: -1                 # Number of samples to evaluate (-1 = all)
+  topk_retrieval: 5               # Top-K passages for evaluation
+  
+  # Metrics
+  compute_em: true                # Compute Exact Match
+  compute_f1: true                # Compute F1 score
+  compute_recall_at_2: true       # Compute Recall@2
+  compute_recall_at_5: true       # Compute Recall@5
+  
+  # Generation settings
+  max_context_length: 1500        # Maximum context length (characters)
+  max_per_document: 300           # Maximum length per document (characters)
+  generation_max_tokens: 2048     # Maximum tokens for answer generation
+  generation_temperature: 0.5     # Temperature for answer generation
+  
+  # Output settings
+  save_detailed_results: true     # Save detailed per-sample results
+  save_summary: false             # Save summary statistics
+  log_level: "INFO"               # Logging level
+
+# ============================================================================
+# General Settings
+# ============================================================================
+general:
+  # Output paths
+  output_dir: "output"            # Default output directory
+  log_dir: "logs"                 # Log directory
+  
+  # Debug settings
+  debug_mode: false               # Enable debug mode
+  verbose: true                   # Verbose output
+  
+  # Random seed for reproducibility
+  random_seed: 42
+

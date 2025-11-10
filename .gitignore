@@ -1,0 +1,70 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project specific
+output/
+logs/
+*.log
+*.graphml
+*.pkl
+*.pt
+*.pth
+
+# Data files
+*.json
+*.jsonl
+*.csv
+
+
+# Dataset directory (benchmark datasets are too large)
+dataset/*.json
+dataset/*.jsonl
+dataset/*.csv
+!dataset/README.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+

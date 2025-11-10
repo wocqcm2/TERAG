@@ -1,0 +1,71 @@
+# TERAG Prompt Templates
+# This file contains all prompt templates used in the TERAG framework
+
+# ============================================================================
+# Concept Extraction Prompts
+# ============================================================================
+concept_extraction:
+  # System message for concept extraction
+  system_message: "Extract named entities (NER) and document-level concepts. Output only the core content in structured format."
+  
+  # User prompt template for single passage
+  passage_prompt: |
+    Extract named entities (NER) and document-level concepts from each passage below.
+
+    【Task Definition】
+    - Entities (NER): Proper names or phrases referring to specific, identifiable real-world objects. Common types include PERSON, ORG, GPE/LOC, DATE/TIME, EVENT, NORP, WORK OF ART, etc.
+    - Concepts (Document-level): Document-level conceptualization means abstracting a whole paragraph or document into a higher-level concept or category that summarizes its main theme, while preserving its overall meaning. It is not just extracting keywords, but identifying the overarching concept.
+
+    【Example】
+    === Passage 1 ===
+    "Manuel Arturo Machado (; born July 6, 1992) is an American professional baseball third baseman and shortstop for the Baltimore Orioles of Major League Baseball (MLB). He attended Brito High School in Miami and was drafted by the Orioles with the third overall pick in the 2010 Major League Baseball draft."
+
+    === Passage 2 ===
+    "Tokyo is the capital and largest city of Japan. It is located on the island of Honshu and has a population of over 14 million people."
+
+    Expected Output:
+    Passage 1:
+    ENTITIES: Manuel Arturo Machado, July 6 1992, American, Baltimore Orioles, Major League Baseball, MLB, Brito High School, Miami, 2010, Major League Baseball draft
+    CONCEPTS: Professional Baseball Player, Athlete Biography
+
+    Passage 2:
+    ENTITIES: Tokyo, Japan, Honshu
+    CONCEPTS: Capital City, Geography
+
+    【Instructions】
+    For each passage below, extract entities and concepts in the exact format shown above. Output only "Passage X:", "ENTITIES:", and "CONCEPTS:" lines. Be concise.
+
+# ============================================================================
+# Named Entity Recognition (NER) Prompts
+# ============================================================================
+ner:
+  # System message for NER
+  system_message: "You are a named entity recognition system. Extract only the key entities from the given text."
+  
+  # User prompt template for NER
+  user_prompt: |
+    Extract the key named entities from the following question. Return only the entity names, separated by commas.
+    
+    Question: {query}
+    
+    Entities:
+
+# ============================================================================
+# Answer Generation Prompts
+# ============================================================================
+answer_generation:
+  # System message for answer generation with Chain-of-Thought reasoning
+  system_message: |
+    As an advanced reading comprehension assistant, your task is to analyze text passages and corresponding questions meticulously. If the information is not enough, you can use your own knowledge to answer the question. Your response start after "Thought: ", where you will methodically break down the reasoning process, illustrating how you arrive at conclusions. Conclude with "Answer: " to present a concise, definitive response as a noun phrase, no elaborations.
+  
+  # User prompt template for answer generation
+  user_prompt: |
+    Answer the following question based on the provided context. Use chain-of-thought reasoning.
+    
+    Context:
+    {context}
+    
+    Question: {question}
+    
+    Thought:
+
