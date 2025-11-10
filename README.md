@@ -1,4 +1,4 @@
-# TERAG: Text-based Entity Relation Augmented Generation
+# TERAG: Token-Efficient Graph-Based  Retrieval-Augmented Generation
 
 A lightweight and token-efficient framework for knowledge graph construction and retrieval-augmented generation (RAG) designed for multi-hop question answering. TERAG reduces token consumption during graph construction to only **3-11% of existing methods**.
 
